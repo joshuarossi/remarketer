@@ -9,9 +9,20 @@ class Book extends EventEmitter {
     var w = new WebSocket("wss://api2.bitfinex.com:3000/ws")
     w.on("message", (function(msg) {
       msg = JSON.parse(msg)
-      if (msg[1] instanceof Array) {
+      if (msg.event == "subscribed") {
+
+      } else if (msg.event == "info") {
+
+      } else if (msg[1] == "hb") {
+
+      } else if (msg == 'undefined') {
+
+      } else if (msg[1] instanceof Array) {
+        msg.shift()
+        msg = msg[0]
         this.emit("snapshot", msg)
-      } else if (msg[1] != "hb") {
+      } else {
+        msg.shift()
         this.emit("update", msg)
       }
     }).bind(this))

@@ -9,6 +9,7 @@ var output = new Output()
 
 
 //TODO Have it take command line arguments so that it can switch between plugins and add a start and stop method
-book.on('update', a => ec.convert(a))
+book.on('snapshot', a => ec.convert_snapshot(a))
+book.on('update', a => ec.convert_update(a))
 ec.on('conversion', a => output.broadcast(a))
 output.on('broadcast', a => console.log(a))
